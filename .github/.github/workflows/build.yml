@@ -1,0 +1,20 @@
+name: Build Windows Executable
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up MSVC
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Build Solution
+      run: |
+        cl /EHsc main.cpp /link /OUT:ComplimentGenerator.exe
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: executable
+        path: ComplimentGenerator.exe
